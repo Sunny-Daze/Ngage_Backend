@@ -9,8 +9,13 @@ export const userRegister = (req, res) => {
     } else {
       const receivedData = req.body;
       const validatedUser = new User(receivedData);
-      validatedUser.save();
-      res.send({ message: "User successfully registered!" });
+      validatedUser.save((err) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send({ message: "User successfully registered!" });
+        }
+      });
     }
   });
 };
@@ -25,28 +30,7 @@ export const userLogin = (req, res) => {
         res.send({ message: "Password didn't match" });
       }
     } else {
-      res.send({ message: "User not registered!", e });
+      res.send({ message: "User not registered!" });
     }
   });
 };
-
-// export const userLogin = async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     await User.findOne({ email: email }, (err, user) => {
-//       if (user) {
-//         if (password === user.password) {
-//           res.send({ message: "Login Succesfull", user: user });
-//         }
-//         else{
-//             res.send({ message: "Password didn't match"})
-//         }
-//       }
-//       else{
-//         res.send({message : "User not registered!", e});
-//       }
-//     });
-//   } catch (e) {
-//     res.send({messae : "Error Logging in the user", e});
-//   }
-// };
