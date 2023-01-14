@@ -1,21 +1,14 @@
-import CryptoJS from "crypto-js";
+import bcrypt from "bcrypt";
 import { UserModel } from "./User.model";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { createAccessToken } from "../utils/middleware/JWT";
 
-
-
 export const login = async (req: any, res: Response) => {
-  let { email } = req.body;
+  let { email, password } = req.body;
 
   const user = await UserModel.findOne({ email: email });
   if (user) {
-    const encpass = CryptoJS.AES.decrypt(
-      user.password,
-      process.env.ENCWORD??""
-    ).toString();
-
-    if (user.password == encpass) {
+    if (bcrypt.compareSync(password, user.password)) {
       let userWithToken: any = user;
       userWithToken.accessToken = createAccessToken(user.id, user.role);
 
@@ -32,22 +25,27 @@ export const login = async (req: any, res: Response) => {
   }
 };
 
-export const signup = async (req: any, res: Response) => {
-  let { email, password, fullName, phone, countryCode, role } = req.body;
+export const signup = async (req: Request, res: Response) => {
+  const { email, password, fullName, phone, countryCode, role } = req.body;
 
   let user = await UserModel.findOne({ email: email, phone: phone });
+
   if (user) {
     res.status(401).json({
       success: false,
       message: "User Already Exists with this email and password",
     });
   } else {
-    const encpass = CryptoJS.AES.encrypt(
-      password,
-      process.env.ENCWORD??''
-    ).toString();
+    const encpass = bcrypt.hashSync(password, 1);
 
-    // user = await UserModel.create({ email });
+    user = await UserModel.create({
+      email,
+      password: encpass,
+      countryCode,
+      phone,
+      fullName,
+      role,
+    });
 
     if (user) {
       res.status(201).json({

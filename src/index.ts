@@ -5,6 +5,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 const mainRoutes = require("./mainRoutes.routes");
+app.use(express.json({ limit: "5000mb" }));
 
 
 

@@ -3,7 +3,7 @@ import { AuthRoutes } from "./auth/auth.routes";
 const app = express();
 
 
-app.use("/Auth", AuthRoutes);
+app.use("/auth", AuthRoutes);
 
 
 module.exports = app;
