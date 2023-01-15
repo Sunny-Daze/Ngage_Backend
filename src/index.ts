@@ -1,13 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
 import { mongoose } from "@typegoose/typegoose";
+import FileUpload from "express-fileupload";
+import cloudinary from "cloudinary";
+
+const mainRoutes = require("./mainRoutes.routes");
+
 dotenv.config();
 const app = express();
 const port = process.env.PORT;
-const mainRoutes = require("./mainRoutes.routes");
+app.use(FileUpload({ useTempFiles: true }));
+
 app.use(express.json({ limit: "5000mb" }));
 
-
+cloudinary.v2.config({
+  cloud_name: process.env.cloud_name,
+  api_key: process.env.api_key,
+  api_secret: process.env.api_secret,
+});
 
 // ############### === DB CONNECTION === ########################
 mongoose.set("strictQuery", true);
@@ -21,13 +31,9 @@ mongoose
     console.log("Connection failed!", error);
   });
 
-
 // ############### === DB CONNECTION END === ########################
 
-
-
 app.use("/api", mainRoutes);
-
 
 // Status Check
 app.get("/", (req, res) => {

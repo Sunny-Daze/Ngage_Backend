@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "./User.model";
 import { Request, Response } from "express";
 import { createAccessToken } from "../utils/middleware/JWT";
+import { uploadFile } from "../utils/Helpers/fileUpload";
 
 export const login = async (req: any, res: Response) => {
   let { email, password } = req.body;
@@ -59,5 +60,11 @@ export const signup = async (req: Request, res: Response) => {
         message: "unable to create user",
       });
     }
+  }
+};
+
+export const upload = async (req: any, res: Response) => {
+  for (const file of Object.values(req.files)) {
+    uploadFile(file);
   }
 };
