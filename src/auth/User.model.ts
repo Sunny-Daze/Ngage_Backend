@@ -12,6 +12,10 @@ export class User {
   @prop({ trim: true })
   fullName: string;
 
+
+  @prop({ trim: true })
+  userName: string;
+
   @prop()
   phone: string;
 

@@ -10,12 +10,11 @@ export const login = async (req: any, res: Response) => {
   const user = await UserModel.findOne({ email: email });
   if (user) {
     if (bcrypt.compareSync(password, user.password)) {
-      let userWithToken: any = user;
-      userWithToken.accessToken = createAccessToken(user.id, user.role);
+      let token = await createAccessToken(user.id, user.role);
 
       res
         .status(201)
-        .json({ success: true, result: userWithToken, message: "Logged in" });
+        .json({ success: true, result: user, token, message: "Logged in" });
     } else {
       res
         .status(201)
@@ -27,7 +26,8 @@ export const login = async (req: any, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, fullName, phone, countryCode, role } = req.body;
+  const { email, password, fullName, phone, countryCode, role, userName } =
+    req.body;
 
   let user = await UserModel.findOne({ email: email, phone: phone });
 
@@ -40,6 +40,7 @@ export const signup = async (req: Request, res: Response) => {
     const encpass = bcrypt.hashSync(password, 1);
 
     user = await UserModel.create({
+      userName,
       email,
       password: encpass,
       countryCode,
