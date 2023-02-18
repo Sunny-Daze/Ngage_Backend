@@ -12,22 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signup = exports.login = void 0;
-const crypto_js_1 = __importDefault(require("crypto-js"));
+exports.upload = exports.signup = exports.login = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 const User_model_1 = require("./User.model");
 const JWT_1 = require("../utils/middleware/JWT");
+const fileUpload_1 = require("../utils/Helpers/fileUpload");
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    let { email } = req.body;
+    let { email, password } = req.body;
     const user = yield User_model_1.UserModel.findOne({ email: email });
     if (user) {
-        const encpass = crypto_js_1.default.AES.decrypt(user.password, (_a = process.env.ENCWORD) !== null && _a !== void 0 ? _a : "").toString();
-        if (user.password == encpass) {
-            let userWithToken = user;
-            userWithToken.accessToken = (0, JWT_1.createAccessToken)(user.id, user.role);
+        if (bcrypt_1.default.compareSync(password, user.password)) {
+            let token = yield (0, JWT_1.createAccessToken)(user.id, user.role);
             res
                 .status(201)
-                .json({ success: true, result: user, message: "Logged in" });
+                .json({ success: true, result: user, token, message: "Logged in" });
         }
         else {
             res
@@ -41,8 +39,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.login = login;
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
-    let { email, password, fullName, phone, countryCode, role } = req.body;
+    const { email, password, fullName, phone, countryCode, role, userName } = req.body;
     let user = yield User_model_1.UserModel.findOne({ email: email, phone: phone });
     if (user) {
         res.status(401).json({
@@ -51,7 +48,16 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     else {
-        const encpass = crypto_js_1.default.AES.encrypt(password, (_b = process.env.ENCWORD) !== null && _b !== void 0 ? _b : '').toString();
+        const encpass = bcrypt_1.default.hashSync(password, 1);
+        user = yield User_model_1.UserModel.create({
+            userName,
+            email,
+            password: encpass,
+            countryCode,
+            phone,
+            fullName,
+            role,
+        });
         if (user) {
             res.status(201).json({
                 success: true,
@@ -68,3 +74,9 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signup = signup;
+const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    for (const file of Object.values(req.files)) {
+        (0, fileUpload_1.uploadFile)(file);
+    }
+});
+exports.upload = upload;

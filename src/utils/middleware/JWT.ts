@@ -24,7 +24,7 @@ export const verifyJwtToken = async (
         token,
         process.env.ACCESS_TOKEN_SECRET!
       );
-      if (payload.type != undefined) {
+      if (payload != undefined) {
         let user: any;
         user = await UserModel.findById(payload.userId);
 

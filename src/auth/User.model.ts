@@ -34,7 +34,7 @@ export class User {
   @prop()
   fcmTokens: [string];
 
-  @prop({ enum: UserRole })
+  @prop({ enum: UserRole ,default: UserRole.EMPLOYEE})
   role: UserRole;
 
   @prop({ default: true })

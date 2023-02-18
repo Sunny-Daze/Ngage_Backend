@@ -40,12 +40,12 @@ export const signup = async (req: Request, res: Response) => {
     const encpass = bcrypt.hashSync(password, 1);
 
     user = await UserModel.create({
-      userName,
+      fullName,
       email,
       password: encpass,
       countryCode,
       phone,
-      fullName,
+
       role,
     });
 
@@ -67,5 +67,22 @@ export const signup = async (req: Request, res: Response) => {
 export const upload = async (req: any, res: Response) => {
   for (const file of Object.values(req.files)) {
     uploadFile(file);
+  }
+};
+
+export const fetchUsers = async (req: any, res: Response) => {
+  let users = await UserModel.find({}, { email: 1, userName: 1, role: 1 });
+
+  if (users) {
+    res.status(201).json({
+      success: true,
+      message: "User has been created",
+      result: users,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "unable to create user",
+    });
   }
 };
