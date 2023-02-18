@@ -10,12 +10,11 @@ export const login = async (req: any, res: Response) => {
   const user = await UserModel.findOne({ email: email });
   if (user) {
     if (bcrypt.compareSync(password, user.password)) {
-      let userWithToken: any = user;
-      userWithToken.accessToken = createAccessToken(user.id, user.role);
+      let token = await createAccessToken(user.id, user.role);
 
       res
         .status(201)
-        .json({ success: true, result: userWithToken, message: "Logged in" });
+        .json({ success: true, result: user, token, message: "Logged in" });
     } else {
       res
         .status(201)
@@ -27,7 +26,8 @@ export const login = async (req: any, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, fullName, phone, countryCode, role } = req.body;
+  const { email, password, fullName, phone, countryCode, role, userName } =
+    req.body;
 
   let user = await UserModel.findOne({ email: email, phone: phone });
 
@@ -40,11 +40,12 @@ export const signup = async (req: Request, res: Response) => {
     const encpass = bcrypt.hashSync(password, 1);
 
     user = await UserModel.create({
+      fullName,
       email,
       password: encpass,
       countryCode,
       phone,
-      fullName,
+
       role,
     });
 
@@ -66,5 +67,69 @@ export const signup = async (req: Request, res: Response) => {
 export const upload = async (req: any, res: Response) => {
   for (const file of Object.values(req.files)) {
     uploadFile(file);
+  }
+};
+
+export const fetchUsers = async (req: any, res: Response) => {
+  let users = await UserModel.find(
+    {
+      isActive: true,
+      isDeleted: false,
+    },
+    { email: 1, userName: 1, role: 1 }
+  );
+
+  if (users) {
+    res.status(201).json({
+      success: true,
+      message: "User has been created",
+      result: users,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "unable to create user",
+    });
+  }
+};
+
+export const updateUser = async (req: any, res: Response) => {
+  let { userId, role } = req.body;
+  let user = await UserModel.findByIdAndUpdate(userId, {
+    role: role,
+  });
+
+  if (user) {
+    res.status(201).json({
+      success: true,
+      message: "User has been update",
+      result: user,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "unable to update user",
+    });
+  }
+};
+
+export const deleteUser = async (req: any, res: Response) => {
+  let { userId } = req.body;
+  let user = await UserModel.findByIdAndUpdate(userId, {
+    isDeleted: true,
+    isActive: false,
+  });
+
+  if (user) {
+    res.status(201).json({
+      success: true,
+      message: "User has been deleted",
+      result: user,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "unable to delete user",
+    });
   }
 };

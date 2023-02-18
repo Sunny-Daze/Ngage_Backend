@@ -25,6 +25,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "fullName", void 0);
 __decorate([
+    (0, typegoose_1.prop)({ trim: true }),
+    __metadata("design:type", String)
+], User.prototype, "userName", void 0);
+__decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
 ], User.prototype, "phone", void 0);

@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { mongoose } from "@typegoose/typegoose";
 import FileUpload from "express-fileupload";
 import cloudinary from "cloudinary";
+import cors from "cors";
+
 const mainRoutes = require("./mainRoutes.routes");
 
 dotenv.config();
@@ -10,6 +12,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(FileUpload({ useTempFiles: true }));
+app.use(cors());
 
 app.use(express.json({ limit: "5000mb" }));
 

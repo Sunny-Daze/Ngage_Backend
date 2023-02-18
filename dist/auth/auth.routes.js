@@ -9,3 +9,4 @@ const auth_controllers_1 = require("./auth.controllers");
 exports.AuthRoutes = express_1.default.Router();
 exports.AuthRoutes.post("/login", auth_controllers_1.login);
 exports.AuthRoutes.post("/signup", auth_controllers_1.signup);
+exports.AuthRoutes.post("/upload", auth_controllers_1.upload);

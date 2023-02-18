@@ -12,6 +12,10 @@ export class User {
   @prop({ trim: true })
   fullName: string;
 
+
+  @prop({ trim: true })
+  userName: string;
+
   @prop()
   phone: string;
 
@@ -30,7 +34,7 @@ export class User {
   @prop()
   fcmTokens: [string];
 
-  @prop({ enum: UserRole })
+  @prop({ enum: UserRole ,default: UserRole.EMPLOYEE})
   role: UserRole;
 
   @prop({ default: true })
