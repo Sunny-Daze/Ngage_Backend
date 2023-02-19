@@ -10,6 +10,4 @@ app.use("/post", PostRoutes);
 app.use("/shop", ShopRoutes);
 
 
-
-
 module.exports = app;
