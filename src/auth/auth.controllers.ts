@@ -94,8 +94,10 @@ export const fetchUsers = async (req: any, res: Response) => {
 };
 
 export const updateUser = async (req: any, res: Response) => {
-  let { userId, role } = req.body;
+  let { userId, email, username, role } = req.body;
   let user = await UserModel.findByIdAndUpdate(userId, {
+    email: email,
+    username: username,
     role: role,
   });
 
