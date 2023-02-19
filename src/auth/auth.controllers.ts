@@ -26,8 +26,7 @@ export const login = async (req: any, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, phone, countryCode, role, userName } =
-    req.body;
+  const { email, password, phone, countryCode, role, userName } = req.body;
 
   let user = await UserModel.findOne({ email: email, phone: phone });
 
@@ -95,12 +94,15 @@ export const fetchUsers = async (req: any, res: Response) => {
 
 export const updateUser = async (req: any, res: Response) => {
   let { userId, email, username, role } = req.body;
-  let user = await UserModel.findByIdAndUpdate(userId, {
-    email: email,
-    username: username,
-    role: role,
-  }, { new: true,
-  runValidator: true});
+  let user = await UserModel.findByIdAndUpdate(
+    userId,
+    {
+      email: email,
+      username: username,
+      role: role,
+    },
+    { new: true, runValidators: true }
+  );
 
   if (user) {
     res.status(201).json({
