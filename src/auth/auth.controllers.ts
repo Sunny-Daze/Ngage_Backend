@@ -99,7 +99,8 @@ export const updateUser = async (req: any, res: Response) => {
     email: email,
     username: username,
     role: role,
-  });
+  }, { new: true,
+  runValidator: true});
 
   if (user) {
     res.status(201).json({
