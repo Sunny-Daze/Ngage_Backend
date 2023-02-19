@@ -26,7 +26,7 @@ export const login = async (req: any, res: Response) => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { email, password, fullName, phone, countryCode, role, userName } =
+  const { email, password, phone, countryCode, role, userName } =
     req.body;
 
   let user = await UserModel.findOne({ email: email, phone: phone });
@@ -40,7 +40,7 @@ export const signup = async (req: Request, res: Response) => {
     const encpass = bcrypt.hashSync(password, 1);
 
     user = await UserModel.create({
-      fullName,
+      userName,
       email,
       password: encpass,
       countryCode,

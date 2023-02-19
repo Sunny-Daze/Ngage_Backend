@@ -9,8 +9,6 @@ export enum UserRole {
 }
 
 export class User {
-  @prop({ trim: true })
-  fullName: string;
 
 
   @prop({ trim: true })
