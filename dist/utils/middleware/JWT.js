@@ -23,7 +23,7 @@ const verifyJwtToken = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         if (authorization) {
             const token = authorization.split(" ")[1];
             const payload = yield (0, jsonwebtoken_1.verify)(token, process.env.ACCESS_TOKEN_SECRET);
-            if (payload.type != undefined) {
+            if (payload != undefined) {
                 let user;
                 user = yield User_model_1.UserModel.findById(payload.userId);
                 if (user != null) {

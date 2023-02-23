@@ -9,58 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = exports.User = exports.UserRole = void 0;
+exports.ShopModel = exports.Shop = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-var UserRole;
-(function (UserRole) {
-    UserRole["ADMIN"] = "Admin";
-    UserRole["EMPLOYEE"] = "Employee";
-    UserRole["CUSTOMER"] = "Customer";
-    UserRole["COOPERATE"] = "Cooperate";
-})(UserRole = exports.UserRole || (exports.UserRole = {}));
-class User {
+class Shop {
 }
 __decorate([
     (0, typegoose_1.prop)({ trim: true }),
     __metadata("design:type", String)
-], User.prototype, "userName", void 0);
+], Shop.prototype, "productName", void 0);
 __decorate([
     (0, typegoose_1.prop)(),
     __metadata("design:type", String)
-], User.prototype, "phone", void 0);
+], Shop.prototype, "productImage", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ default: "91" }),
+    (0, typegoose_1.prop)({}),
     __metadata("design:type", String)
-], User.prototype, "countryCode", void 0);
+], Shop.prototype, "productDesc", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ trim: true }),
-    __metadata("design:type", String)
-], User.prototype, "email", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ trim: true }),
-    __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", String)
-], User.prototype, "avatar", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", Array)
-], User.prototype, "fcmTokens", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ enum: UserRole, default: UserRole.EMPLOYEE }),
-    __metadata("design:type", String)
-], User.prototype, "role", void 0);
+    (0, typegoose_1.prop)({}),
+    __metadata("design:type", Number)
+], Shop.prototype, "userPoints", void 0);
 __decorate([
     (0, typegoose_1.prop)({ default: true }),
     __metadata("design:type", Boolean)
-], User.prototype, "isActive", void 0);
+], Shop.prototype, "isActive", void 0);
 __decorate([
     (0, typegoose_1.prop)({ default: false }),
     __metadata("design:type", Boolean)
-], User.prototype, "isDeleted", void 0);
-exports.User = User;
-exports.UserModel = (0, typegoose_1.getModelForClass)(User, {
+], Shop.prototype, "isDeleted", void 0);
+exports.Shop = Shop;
+exports.ShopModel = (0, typegoose_1.getModelForClass)(Shop, {
     schemaOptions: { timestamps: true },
 });
