@@ -4,7 +4,7 @@ import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 export enum UserRole {
   ADMIN = "Admin",
   EMPLOYEE = "Employee",
-  USER = "User",
+  CUSTOMER = "Customer",
   COOPERATE = "Cooperate",
 }
 

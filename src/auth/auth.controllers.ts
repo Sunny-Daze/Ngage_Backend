@@ -98,7 +98,7 @@ export const updateUser = async (req: any, res: Response) => {
     userId,
     {
       email: email,
-      username: username,
+      userName: username,
       role: role,
     },
     { new: true, runValidators: true }
