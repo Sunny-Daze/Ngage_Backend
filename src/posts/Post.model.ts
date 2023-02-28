@@ -1,5 +1,5 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
-import { User } from "src/auth/User.model";
+import { User } from "../auth/User.model";
 
 export class Post {
   @prop({ trim: true })
