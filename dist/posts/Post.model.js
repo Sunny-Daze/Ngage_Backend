@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostModel = exports.Post = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
-const User_model_1 = require("src/auth/User.model");
+const User_model_1 = require("../auth/User.model");
 class Post {
 }
 __decorate([
