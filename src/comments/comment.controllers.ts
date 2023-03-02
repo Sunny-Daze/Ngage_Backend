@@ -37,7 +37,7 @@ export const fetchComment  = async (req: any, res: Response) => {
   try {
     let comments = await CommentModel.find({
       isDeleted: false,
-    });
+    }).populate('user');
      
     if (comments) {
       res.status(201).json({
