@@ -1,5 +1,5 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
-import { Post } from "src/posts/Post.model";
+import { Post } from "../posts/Post.model";
 import { User } from "../auth/User.model";
 
 export class Like {

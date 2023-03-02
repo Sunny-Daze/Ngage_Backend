@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PostModel } from "src/posts/Post.model";
+import { PostModel } from "../posts/Post.model";
 import { LikeModel } from "./like.model";
 
 export const likePost = async (req: any, res: Response) => {
