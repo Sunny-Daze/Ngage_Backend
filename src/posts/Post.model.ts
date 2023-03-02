@@ -14,6 +14,10 @@ export class Post {
   @prop({ ref: () => User })
   user: Ref<User>;
 
+
+  @prop({required:true,default:0})
+  likeCounts:number;
+
   @prop({ default: true })
   isActive: boolean;
 
