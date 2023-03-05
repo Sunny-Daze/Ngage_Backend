@@ -11,11 +11,13 @@ export const createPost = async (req: any, res: Response) => {
       title,
     });
 
-    if (post) {
+   let  createdPost = await PostModel.findById(post.id).populate('user')
+
+    if (createdPost) {
       res.status(201).json({
         success: true,
         message: "Post has been added",
-        result: post,
+        result: createdPost,
       });
     } else {
       res.status(201).json({
