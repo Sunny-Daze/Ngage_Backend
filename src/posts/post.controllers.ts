@@ -11,7 +11,7 @@ export const createPost = async (req: any, res: Response) => {
       title,
     });
 
-   let  createdPost = await PostModel.findById(post.id).populate('user')
+   let  createdPost = await PostModel.findById(post.id).populate('user',{userName:1})
 
     if (createdPost) {
       res.status(201).json({
