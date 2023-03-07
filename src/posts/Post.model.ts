@@ -23,6 +23,10 @@ export class Post {
 
   @prop({ default: false })
   isDeleted: boolean;
+
+
+  @prop({})
+  liked: boolean;
 }
 
 export const PostModel = getModelForClass(Post, {

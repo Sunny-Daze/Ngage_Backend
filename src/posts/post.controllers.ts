@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { LikeModel } from "../likes/like.model";
 import { PostModel } from "./Post.model";
 
 export const createPost = async (req: any, res: Response) => {
@@ -11,7 +12,9 @@ export const createPost = async (req: any, res: Response) => {
       title,
     });
 
-   let  createdPost = await PostModel.findById(post.id).populate('user',{userName:1})
+    let createdPost = await PostModel.findById(post.id).populate("user", {
+      userName: 1,
+    });
 
     if (createdPost) {
       res.status(201).json({
@@ -36,7 +39,7 @@ export const createPost = async (req: any, res: Response) => {
 };
 
 export const fetchPosts = async (req: any, res: Response) => {
-  let { limit, skip } = req.body;
+  let { limit, skip, user } = req.body;
   try {
     let posts = await PostModel.find({
       isDeleted: false,
@@ -48,6 +51,19 @@ export const fetchPosts = async (req: any, res: Response) => {
         userName: 1,
       })
       .sort({ createdAt: -1 });
+
+    for (let i = 0; i < posts.length; i++) {
+      let liked = await LikeModel.findOne({
+        post: posts[i].id,
+        user: user,
+      });
+
+      if (liked) {
+        posts[i].liked = true;
+      } else {
+        posts[i].liked = false;
+      }
+    }
 
     if (posts) {
       res.status(201).json({
