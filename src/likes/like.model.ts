@@ -9,9 +9,6 @@ export class Like {
 
   @prop({ ref: () => User })
   user: Ref<User>;
-
-  @prop({ default: false })
-  isDeleted: boolean;
 }
 
 export const LikeModel = getModelForClass(Like, {

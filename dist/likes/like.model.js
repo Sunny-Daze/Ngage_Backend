@@ -23,10 +23,6 @@ __decorate([
     (0, typegoose_1.prop)({ ref: () => User_model_1.User }),
     __metadata("design:type", Object)
 ], Like.prototype, "user", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ default: false }),
-    __metadata("design:type", Boolean)
-], Like.prototype, "isDeleted", void 0);
 exports.Like = Like;
 exports.LikeModel = (0, typegoose_1.getModelForClass)(Like, {
     schemaOptions: { timestamps: true },
