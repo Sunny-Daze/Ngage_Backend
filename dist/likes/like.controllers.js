@@ -20,7 +20,7 @@ const likePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             post,
         });
         if (like) {
-            Post_model_1.PostModel.findByIdAndUpdate(post, {
+            yield Post_model_1.PostModel.findOneAndUpdate({ _id: post }, {
                 $inc: { likeCounts: 1 },
             });
             res.status(201).json({
@@ -57,7 +57,7 @@ const unlikePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             runValidators: true,
         });
         if (unliked) {
-            Post_model_1.PostModel.findByIdAndUpdate(post, {
+            yield Post_model_1.PostModel.findOneAndUpdate({ _id: post }, {
                 $inc: { likeCounts: -1 },
             });
             res.status(201).json({

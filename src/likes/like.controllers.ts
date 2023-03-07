@@ -11,7 +11,7 @@ export const likePost = async (req: any, res: Response) => {
     });
 
     if (like) {
-      PostModel.findByIdAndUpdate(post, {
+     await PostModel.findOneAndUpdate({_id:post}, {
         $inc: { likeCounts: 1 },
       });
 
@@ -51,7 +51,7 @@ export const unlikePost = async (req: any, res: Response) => {
     );
 
     if (unliked) {
-      PostModel.findByIdAndUpdate(post, {
+      await PostModel.findOneAndUpdate({_id:post}, {
         $inc: { likeCounts: -1 },
       });
       res.status(201).json({
