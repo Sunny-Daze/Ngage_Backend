@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchPosts = exports.createPost = void 0;
+exports.deletePost = exports.fetchPosts = exports.createPost = void 0;
 const like_model_1 = require("../likes/like.model");
 const Post_model_1 = require("./Post.model");
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -95,3 +95,33 @@ const fetchPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.fetchPosts = fetchPosts;
+const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { post } = req.body;
+    try {
+        let deletedPost = yield Post_model_1.PostModel.findByIdAndUpdate(post, {
+            isDeleted: true
+        });
+        if (deletedPost) {
+            res.status(201).json({
+                success: true,
+                message: "deleted Post",
+                result: deletedPost,
+            });
+        }
+        else {
+            res.status(201).json({
+                success: false,
+                message: "Failed to delete post",
+                result: null,
+            });
+        }
+    }
+    catch (error) {
+        res.status(401).json({
+            success: false,
+            message: "Failed to delete post",
+            error,
+        });
+    }
+});
+exports.deletePost = deletePost;

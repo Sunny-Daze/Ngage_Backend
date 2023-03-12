@@ -16,7 +16,7 @@ var UserRole;
     UserRole["ADMIN"] = "Admin";
     UserRole["EMPLOYEE"] = "Employee";
     UserRole["CUSTOMER"] = "Customer";
-    UserRole["COOPERATE"] = "Cooperate";
+    UserRole["SUPERADMIN"] = "SuperAdmin";
 })(UserRole = exports.UserRole || (exports.UserRole = {}));
 class User {
 }

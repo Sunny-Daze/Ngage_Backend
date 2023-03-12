@@ -86,3 +86,34 @@ export const fetchPosts = async (req: any, res: Response) => {
     });
   }
 };
+
+
+
+export const deletePost = async (req: any, res: Response) => {
+  let { post } = req.body;
+  try {
+    let deletedPost = await PostModel.findByIdAndUpdate(post,{
+     isDeleted:true
+    });
+
+    if (deletedPost) {
+      res.status(201).json({
+        success: true,
+        message: "deleted Post",
+        result: deletedPost,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: "Failed to delete post",
+        result: null,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Failed to delete post",
+      error,
+    });
+  }
+};
