@@ -5,3 +5,4 @@ export const CommentRoutes: Router = express.Router();
 
 CommentRoutes.post("/createComment", verifyJwtToken, createComment);
 CommentRoutes.post("/fetchComment", verifyJwtToken, fetchComment);
+

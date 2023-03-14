@@ -11,10 +11,13 @@ export const createComment = async (req: any, res: Response) => {
     });
 
     if (insertedComment) {
+      let newComment = await CommentModel.findById(
+        insertedComment._id
+      ).populate("user");
       res.status(201).json({
         success: true,
         message: "Comment has been added",
-        result: insertedComment,
+        result: newComment,
       });
     } else {
       res.status(201).json({
@@ -32,13 +35,13 @@ export const createComment = async (req: any, res: Response) => {
   }
 };
 
-export const fetchComment  = async (req: any, res: Response) => {
+export const fetchComment = async (req: any, res: Response) => {
   let { limit, skip } = req.body;
   try {
     let comments = await CommentModel.find({
       isDeleted: false,
-    }).populate('user');
-     
+    }).populate("user");
+
     if (comments) {
       res.status(201).json({
         success: true,
@@ -60,3 +63,4 @@ export const fetchComment  = async (req: any, res: Response) => {
     });
   }
 };
+

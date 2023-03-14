@@ -20,10 +20,11 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             post,
         });
         if (insertedComment) {
+            let newComment = yield Comment_model_1.CommentModel.findById(insertedComment._id).populate("user");
             res.status(201).json({
                 success: true,
                 message: "Comment has been added",
-                result: insertedComment,
+                result: newComment,
             });
         }
         else {
@@ -48,7 +49,7 @@ const fetchComment = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         let comments = yield Comment_model_1.CommentModel.find({
             isDeleted: false,
-        }).populate('user');
+        }).populate("user");
         if (comments) {
             res.status(201).json({
                 success: true,
