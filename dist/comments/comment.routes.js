@@ -10,3 +10,4 @@ const comment_controllers_1 = require("./comment.controllers");
 exports.CommentRoutes = express_1.default.Router();
 exports.CommentRoutes.post("/createComment", JWT_1.verifyJwtToken, comment_controllers_1.createComment);
 exports.CommentRoutes.post("/fetchComment", JWT_1.verifyJwtToken, comment_controllers_1.fetchComment);
+exports.CommentRoutes.post("/deleteComment", JWT_1.verifyJwtToken, comment_controllers_1.deleteComment);
