@@ -36,11 +36,13 @@ export const createComment = async (req: any, res: Response) => {
 };
 
 export const fetchComment = async (req: any, res: Response) => {
-  let { limit, skip } = req.body;
+  let { post, user } = req.body;
   try {
     let comments = await CommentModel.find({
       isDeleted: false,
-    }).populate("user");
+      post:post,
+      user:user
+    }).populate("user").sort({createdAt:-1});
 
     if (comments) {
       res.status(201).json({

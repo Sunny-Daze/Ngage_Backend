@@ -45,11 +45,13 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createComment = createComment;
 const fetchComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { limit, skip } = req.body;
+    let { post, user } = req.body;
     try {
         let comments = yield Comment_model_1.CommentModel.find({
             isDeleted: false,
-        }).populate("user");
+            post: post,
+            user: user
+        }).populate("user").sort({ createdAt: -1 });
         if (comments) {
             res.status(201).json({
                 success: true,
