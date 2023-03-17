@@ -79,3 +79,83 @@ export const purchaseShopProduct = async (req: any, res: Response) => {
     });
   }
 };
+
+export const editShopProduct = async (req: any, res: Response) => {
+  let productImage;
+  let { productId, productName, productDesc, userPoints, productImageURL } =
+    req.body;
+  try {
+    if (!productImageURL) {
+      for (const file of Object.values(req.files)) {
+        productImage = await uploadFile(file);
+      }
+    }
+    let shopItem = await ShopModel.findByIdAndUpdate(
+      productId,
+      {
+        productDesc,
+        productImage: productImage ?? productImageURL,
+        productName,
+        userPoints,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (shopItem) {
+      res.status(201).json({
+        success: true,
+        message: "Shop Product edit Successfully",
+        result: shopItem,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: "Failed to add edit Project",
+        result: shopItem,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Failed to add edit Project",
+      error,
+    });
+  }
+};
+
+export const deleteShopProduct = async (req: any, res: Response) => {
+  let { productId } = req.body;
+  try {
+    let shopItem = await ShopModel.findByIdAndUpdate(
+      productId,
+      {
+        isDeleted: true,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (shopItem) {
+      res.status(201).json({
+        success: true,
+        message: "Shop Product Deleted Successfully",
+        result: shopItem,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: "Failed to delete shop Project",
+        result: shopItem,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Failed to delete shop Project",
+      error,
+    });
+  }
+};

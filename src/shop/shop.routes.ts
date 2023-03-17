@@ -4,6 +4,9 @@ import {
   createNewShopProduct,
   fetchShopProducts,
   purchaseShopProduct,
+  editShopProduct,
+  deleteShopProduct
+
 } from "./shop.controller";
 export const ShopRoutes: Router = express.Router();
 
@@ -12,3 +15,7 @@ export const ShopRoutes: Router = express.Router();
 ShopRoutes.post("/createNewShopProduct",verifyJwtToken, createNewShopProduct);
 ShopRoutes.post("/fetchShopProducts",verifyJwtToken, fetchShopProducts);
 ShopRoutes.post("/purchaseShopProduct",verifyJwtToken, purchaseShopProduct);
+ShopRoutes.post("/editShopProduct",verifyJwtToken, editShopProduct);
+ShopRoutes.post("/deleteShopProduct",verifyJwtToken, deleteShopProduct);
+
+
