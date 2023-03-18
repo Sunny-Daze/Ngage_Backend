@@ -17,6 +17,9 @@ export class RecreationMilestone {
   @prop({ default: true })
   isActive: boolean;
 
+  @prop()
+  status:boolean
+
   @prop({ default: false })
   isDeleted: boolean;
 }

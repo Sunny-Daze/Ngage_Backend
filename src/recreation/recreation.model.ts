@@ -11,6 +11,9 @@ export class Recreation {
   @prop({ ref: () => User })
   createdBy: Ref<User>;
 
+  @prop()
+  milestones: any;
+
   @prop({ default: true })
   isActive: boolean;
 

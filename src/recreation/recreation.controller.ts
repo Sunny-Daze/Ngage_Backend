@@ -1,12 +1,35 @@
 import { Request, Response } from "express";
 import { RecreationModel } from "./recreation.model";
+import {
+  RecreationMilestone,
+  RecreationMilestoneModel,
+} from "./recreationMilestone/recreationMileStone.model";
+import { RecreationUserMapModel } from "./recreationUserMap/recreationUserMap.model";
 
 export const fetchRecreations = async (req: any, res: Response) => {
+  let { user } = req.body;
   try {
     let recreation = await RecreationModel.find({
       isActive: true,
       isDeleted: false,
-    }).populate('');
+    });
+
+    for await (const rec of recreation) {
+      let milestones = await RecreationMilestoneModel.find({
+        isDeleted: false,
+        isActive: false,
+      });
+
+      for await (const mile of milestones) {
+        let userStatus = await RecreationUserMapModel.findOne({
+          milestone: mile._id,
+          user: user,
+        }).status;
+
+        mile.status = userStatus.status;
+      }
+    }
+
     if (recreation) {
       res.status(201).json({
         success: true,

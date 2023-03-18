@@ -47,6 +47,7 @@ export const updateRecreationMileStone = async (req: any, res: Response) => {
         new: true,
       }
     );
+
     if (mileStone) {
       res.status(201).json({
         success: true,

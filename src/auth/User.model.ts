@@ -1,17 +1,13 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 
-
 export enum UserRole {
   ADMIN = "Admin",
   EMPLOYEE = "Employee",
   CUSTOMER = "Customer",
-  SUPERADMIN  = "SuperAdmin"
-
+  SUPERADMIN = "SuperAdmin",
 }
 
 export class User {
-
-
   @prop({ trim: true })
   userName: string;
 
@@ -33,8 +29,11 @@ export class User {
   @prop()
   fcmTokens: [string];
 
-  @prop({ enum: UserRole ,default: UserRole.EMPLOYEE})
+  @prop({ enum: UserRole, default: UserRole.EMPLOYEE })
   role: UserRole;
+
+  @prop({ default: 0 })
+  userPoints: number;
 
   @prop({ default: true })
   isActive: boolean;
@@ -43,7 +42,6 @@ export class User {
   isDeleted: boolean;
 }
 
-
 export const UserModel = getModelForClass(User, {
-    schemaOptions: { timestamps: true },
+  schemaOptions: { timestamps: true },
 });
