@@ -17,14 +17,14 @@ export const fetchRecreations = async (req: any, res: Response) => {
       let milestones = await RecreationMilestoneModel.find({
         isDeleted: false,
         isActive: true,
-        recreationId: rec._id
+        recreationId: rec._id,
       });
 
       rec.milestones = milestones;
     }
 
     if (recreation) {
-       res.status(201).json({
+      res.status(201).json({
         success: true,
         message: "Recreation Fetched",
         result: recreation,
@@ -53,11 +53,15 @@ export const createRecreation = async (req: any, res: Response) => {
       desc: desc,
       createdBy: user,
     });
+
     if (recreation) {
+      let newRecreation = await RecreationModel.findById(
+        recreation.id
+      ).populate("createdBy", { userName: 1 });
       res.status(201).json({
         success: true,
         message: "Recreation Created",
-        result: recreation,
+        result: newRecreation,
       });
     } else {
       res.status(201).json({
@@ -78,11 +82,22 @@ export const createRecreation = async (req: any, res: Response) => {
 export const updateRecreation = async (req: any, res: Response) => {
   let { recreationId, title, desc, user } = req.body;
   try {
-    let recreation = await RecreationModel.findByIdAndUpdate(recreationId, {
-      title: title,
-      desc: desc,
-      createdBy: user,
-    });
+    let recreation = await RecreationModel.findByIdAndUpdate(
+      recreationId,
+      {
+        title: title,
+        desc: desc,
+        createdBy: user,
+      },
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+    recreation = await RecreationModel.findById(recreationId).populate(
+      "createdBy",
+      { userName: 1 }
+    );
     if (recreation) {
       res.status(201).json({
         success: true,
