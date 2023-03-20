@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.purchaseShopProduct = exports.fetchShopProducts = exports.createNewShopProduct = void 0;
+exports.deleteShopProduct = exports.editShopProduct = exports.purchaseShopProduct = exports.fetchShopProducts = exports.createNewShopProduct = void 0;
 const fileUpload_1 = require("../utils/Helpers/fileUpload");
 const orders_model_1 = require("./orders.model");
 const shop_model_1 = require("./shop.model");
@@ -91,3 +91,78 @@ const purchaseShopProduct = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.purchaseShopProduct = purchaseShopProduct;
+const editShopProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let productImage;
+    let { productId, productName, productDesc, userPoints, productImageURL } = req.body;
+    try {
+        if (!productImageURL) {
+            for (const file of Object.values(req.files)) {
+                productImage = yield (0, fileUpload_1.uploadFile)(file);
+            }
+        }
+        let shopItem = yield shop_model_1.ShopModel.findByIdAndUpdate(productId, {
+            productDesc,
+            productImage: productImage !== null && productImage !== void 0 ? productImage : productImageURL,
+            productName,
+            userPoints,
+        }, {
+            new: true,
+            runValidators: true,
+        });
+        if (shopItem) {
+            res.status(201).json({
+                success: true,
+                message: "Shop Product edit Successfully",
+                result: shopItem,
+            });
+        }
+        else {
+            res.status(201).json({
+                success: false,
+                message: "Failed to add edit Project",
+                result: shopItem,
+            });
+        }
+    }
+    catch (error) {
+        res.status(401).json({
+            success: false,
+            message: "Failed to add edit Project",
+            error,
+        });
+    }
+});
+exports.editShopProduct = editShopProduct;
+const deleteShopProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { productId } = req.body;
+    try {
+        let shopItem = yield shop_model_1.ShopModel.findByIdAndUpdate(productId, {
+            isDeleted: true,
+        }, {
+            new: true,
+            runValidators: true,
+        });
+        if (shopItem) {
+            res.status(201).json({
+                success: true,
+                message: "Shop Product Deleted Successfully",
+                result: shopItem,
+            });
+        }
+        else {
+            res.status(201).json({
+                success: false,
+                message: "Failed to delete shop Project",
+                result: shopItem,
+            });
+        }
+    }
+    catch (error) {
+        res.status(401).json({
+            success: false,
+            message: "Failed to delete shop Project",
+            error,
+        });
+    }
+});
+exports.deleteShopProduct = deleteShopProduct;

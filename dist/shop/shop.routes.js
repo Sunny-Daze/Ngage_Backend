@@ -11,3 +11,5 @@ exports.ShopRoutes = express_1.default.Router();
 exports.ShopRoutes.post("/createNewShopProduct", JWT_1.verifyJwtToken, shop_controller_1.createNewShopProduct);
 exports.ShopRoutes.post("/fetchShopProducts", JWT_1.verifyJwtToken, shop_controller_1.fetchShopProducts);
 exports.ShopRoutes.post("/purchaseShopProduct", JWT_1.verifyJwtToken, shop_controller_1.purchaseShopProduct);
+exports.ShopRoutes.post("/editShopProduct", JWT_1.verifyJwtToken, shop_controller_1.editShopProduct);
+exports.ShopRoutes.post("/deleteShopProduct", JWT_1.verifyJwtToken, shop_controller_1.deleteShopProduct);

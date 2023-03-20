@@ -53,6 +53,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
+    (0, typegoose_1.prop)({ default: 0 }),
+    __metadata("design:type", Number)
+], User.prototype, "userPoints", void 0);
+__decorate([
     (0, typegoose_1.prop)({ default: true }),
     __metadata("design:type", Boolean)
 ], User.prototype, "isActive", void 0);
