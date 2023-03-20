@@ -4,6 +4,7 @@ import { CommentRoutes } from "./comments/comment.routes";
 import { LikeRouter } from "./likes/like.routes";
 import { PostRoutes } from "./posts/post.routes";
 import { RecreationRoutes } from "./recreation/recreation.routes";
+import { RecreationMilestoneRoutes } from "./recreation/recreationMilestone/recreationMileStone.routes";
 import { ShopRoutes } from "./shop/shop.routes";
 const app = express();
 
@@ -14,5 +15,10 @@ app.use("/shop", ShopRoutes);
 app.use("/comment", CommentRoutes);
 app.use("/like", LikeRouter);
 app.use("/recreation", RecreationRoutes);
+
+app.use("/recreationMilestone", RecreationMilestoneRoutes);
+
+
+
 
 module.exports = app;

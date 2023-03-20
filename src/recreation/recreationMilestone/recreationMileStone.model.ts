@@ -12,7 +12,7 @@ export class RecreationMilestone {
   desc: string;
 
   @prop({ default: 0 })
-  userPoints: string;
+  userPoints: number;
 
   @prop({ default: true })
   isActive: boolean;

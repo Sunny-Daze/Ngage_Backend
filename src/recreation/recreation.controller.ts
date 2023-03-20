@@ -7,31 +7,24 @@ import {
 import { RecreationUserMapModel } from "./recreationUserMap/recreationUserMap.model";
 
 export const fetchRecreations = async (req: any, res: Response) => {
-  let { user } = req.body;
   try {
     let recreation = await RecreationModel.find({
       isActive: true,
       isDeleted: false,
-    });
+    }).populate("createdBy", { userName: 1 });
 
     for await (const rec of recreation) {
       let milestones = await RecreationMilestoneModel.find({
         isDeleted: false,
-        isActive: false,
+        isActive: true,
+        recreationId: rec._id
       });
 
-      for await (const mile of milestones) {
-        let userStatus = await RecreationUserMapModel.findOne({
-          milestone: mile._id,
-          user: user,
-        }).status;
-
-        mile.status = userStatus.status;
-      }
+      rec.milestones = milestones;
     }
 
     if (recreation) {
-      res.status(201).json({
+       res.status(201).json({
         success: true,
         message: "Recreation Fetched",
         result: recreation,
@@ -136,6 +129,52 @@ export const deleteRecreation = async (req: any, res: Response) => {
     res.status(401).json({
       success: false,
       message: "Failed to Delete recreation",
+      error,
+    });
+  }
+};
+
+export const fetchRecreationsForUser = async (req: any, res: Response) => {
+  let { user } = req.body;
+  try {
+    let recreation = await RecreationModel.find({
+      isActive: true,
+      isDeleted: false,
+    });
+
+    for await (const rec of recreation) {
+      let milestones = await RecreationMilestoneModel.find({
+        isDeleted: false,
+        isActive: false,
+      });
+
+      for await (const mile of milestones) {
+        let userStatus = await RecreationUserMapModel.findOne({
+          milestone: mile._id,
+          user: user,
+        }).status;
+
+        mile.status = userStatus.status;
+      }
+    }
+
+    if (recreation) {
+      res.status(201).json({
+        success: true,
+        message: "Recreation Fetched",
+        result: recreation,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: "Failed to fetch recreation",
+        result: recreation,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Failed to fetch recreation",
       error,
     });
   }

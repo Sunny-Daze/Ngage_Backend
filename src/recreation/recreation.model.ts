@@ -12,7 +12,7 @@ export class Recreation {
   createdBy: Ref<User>;
 
   @prop()
-  milestones: any;
+  milestones: Array<any>;
 
   @prop({ default: true })
   isActive: boolean;
