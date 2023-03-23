@@ -1,14 +1,18 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { User } from "../auth/User.model";
 
-export class Shop {
+export class Recreation {
   @prop({ trim: true })
-  name: string;
+  title: string;
 
   @prop()
   desc: string;
 
- 
+  @prop({ ref: () => User })
+  createdBy: Ref<User>;
 
+  @prop()
+  milestones: Array<any>;
 
   @prop({ default: true })
   isActive: boolean;
@@ -17,6 +21,6 @@ export class Shop {
   isDeleted: boolean;
 }
 
-export const ShopModel = getModelForClass(Shop, {
+export const RecreationModel = getModelForClass(Recreation, {
   schemaOptions: { timestamps: true },
 });
