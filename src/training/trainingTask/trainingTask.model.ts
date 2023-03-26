@@ -3,7 +3,7 @@ import { Training } from "../traning.model";
 
 export class TrainingTask {
   @prop({ ref: () => Training })
-  TrainingId: Ref<Training>;
+  trainingId: Ref<Training>;
 
   @prop({ required: true })
   title: string;

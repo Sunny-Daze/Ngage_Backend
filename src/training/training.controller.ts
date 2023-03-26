@@ -83,7 +83,7 @@ export const createTraining = async (req: any, res: Response) => {
 export const updateTraining = async (req: any, res: Response) => {
   let { trainingId, title, desc, user } = req.body;
   try {
-    let training = await TrainingModel.findByIdAndUpdate(
+    let training =  await TrainingModel.findByIdAndUpdate(
       trainingId,
       {
         title: title,

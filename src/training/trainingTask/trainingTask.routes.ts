@@ -1,14 +1,14 @@
 import express, { Router } from "express";
 import { verifyJwtToken } from "../../utils/middleware/JWT";
 import {
-  createRecreationMileStone,
-  updateRecreationMileStone,
-  deleteRecreationMileStone
+  createTrainingTask,
+  updateTrainingTask,
+  deleteTrainingTask
 } from "./trainingTask.controller";
 export const TraningTaskRoutes: Router = express.Router();
 
-TraningTaskRoutes.post("/createRecreationMileStone", verifyJwtToken, createRecreationMileStone);
-TraningTaskRoutes.post("/updateRecreationMileStone", verifyJwtToken, updateRecreationMileStone);
-TraningTaskRoutes.post("/deleteRecreationMileStone", verifyJwtToken, deleteRecreationMileStone);
+TraningTaskRoutes.post("/createTrainingTask", verifyJwtToken, createTrainingTask);
+TraningTaskRoutes.post("/updateTrainingTask", verifyJwtToken, updateTrainingTask);
+TraningTaskRoutes.post("/deleteTrainingTask", verifyJwtToken, deleteTrainingTask);
 
 

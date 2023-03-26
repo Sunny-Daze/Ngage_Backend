@@ -7,6 +7,7 @@ import { RecreationRoutes } from "./recreation/recreation.routes";
 import { RecreationMilestoneRoutes } from "./recreation/recreationMilestone/recreationMileStone.routes";
 import { ShopRoutes } from "./shop/shop.routes";
 import { TrainingRoutes } from "./training/training.routes";
+import { TraningTaskRoutes } from "./training/trainingTask/trainingTask.routes";
 const app = express();
 
 
@@ -16,10 +17,15 @@ app.use("/shop", ShopRoutes);
 app.use("/comment", CommentRoutes);
 app.use("/like", LikeRouter);
 app.use("/recreation", RecreationRoutes);
-app.use("/training", TrainingRoutes);
-
-
 app.use("/recreationMilestone", RecreationMilestoneRoutes);
+
+
+
+app.use("/training", TrainingRoutes);
+app.use("/trainingTask", TraningTaskRoutes);
+
+
+
 
 
 

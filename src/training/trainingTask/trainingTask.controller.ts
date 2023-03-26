@@ -1,26 +1,26 @@
-import { RecreationMilestoneModel } from "./recreationMileStone.model";
+import { TrainingTaskModel } from "./trainingTask.model";
 import { Request, Response } from "express";
 
-export const createRecreationMileStone = async (req: any, res: Response) => {
-  let { recreationId, title, desc, userPoints } = req.body;
+export const createTrainingTask = async (req: any, res: Response) => {
+  let { trainingId, title, desc, userPoints } = req.body;
   try {
-    let mileStone = await RecreationMilestoneModel.create({
-      recreationId: recreationId,
+    let trainingTask = await TrainingTaskModel.create({
+      trainingId: trainingId,
       title: title,
       desc: desc,
       userPoints: userPoints,
     });
-    if (mileStone) {
+    if (trainingTask) {
       res.status(201).json({
         success: true,
-        message: "Recreation milestone created",
-        result: mileStone,
+        message: "Recreation trainingTask created",
+        result: trainingTask,
       });
     } else {
       res.status(201).json({
         success: false,
-        message: "Failed to create recreation milestone",
-        result: mileStone,
+        message: "Failed to create training task",
+        result: null,
       });
     }
   } catch (error) {
@@ -32,11 +32,11 @@ export const createRecreationMileStone = async (req: any, res: Response) => {
   }
 };
 
-export const updateRecreationMileStone = async (req: any, res: Response) => {
-  let { recreationMileStoneId, title, desc, userPoints } = req.body;
+export const updateTrainingTask = async (req: any, res: Response) => {
+  let { trainingTaskId, title, desc, userPoints } = req.body;
   try {
-    let mileStone = await RecreationMilestoneModel.findByIdAndUpdate(
-      recreationMileStoneId,
+    let trainingTask = await TrainingTaskModel.findByIdAndUpdate(
+      trainingTaskId,
       {
         title: title,
         desc: desc,
@@ -48,17 +48,18 @@ export const updateRecreationMileStone = async (req: any, res: Response) => {
       }
     );
 
-    if (mileStone) {
+    if (trainingTask) {
+      trainingTask = await TrainingTaskModel.findById(trainingTaskId);
       res.status(201).json({
         success: true,
-        message: "Recreation milestone updated",
-        result: mileStone,
+        message: "trainingTask updated",
+        result: trainingTask,
       });
     } else {
       res.status(201).json({
         success: false,
         message: "Failed to update recreation milestone",
-        result: mileStone,
+        result: null,
       });
     }
   } catch (error) {
@@ -70,31 +71,31 @@ export const updateRecreationMileStone = async (req: any, res: Response) => {
   }
 };
 
-export const deleteRecreationMileStone = async (req: any, res: Response) => {
-  let { recreationMileStoneId, } = req.body;
+export const deleteTrainingTask = async (req: any, res: Response) => {
+  let { trainingTaskId, } = req.body;
   try {
-    let mileStone = await RecreationMilestoneModel.findByIdAndUpdate(recreationMileStoneId,{
+    let trainingTask = await TrainingTaskModel.findByIdAndUpdate(trainingTaskId,{
       isDeleted: true,
       isActive : false
 
     });
-    if (mileStone) {
+    if (trainingTask) {
       res.status(201).json({
         success: true,
-        message: "Recreation milestone created",
-        result: mileStone,
+        message: "Training TrainingTask created",
+        result: trainingTask,
       });
     } else {
       res.status(201).json({
         success: false,
-        message: "Failed to create recreation milestone",
-        result: mileStone,
+        message: "Failed to delete Training task",
+        result: null,
       });
     }
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: "Failed to create recreation  milestone",
+      message: "Failed to delete recreation  milestone",
       error,
     });
   }
