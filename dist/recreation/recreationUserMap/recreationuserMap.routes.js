@@ -10,3 +10,4 @@ const recreationUserMap_controller_1 = require("./recreationUserMap.controller")
 exports.RecreationUserMapRoutes = express_1.default.Router();
 exports.RecreationUserMapRoutes.post("/joinRecreation", JWT_1.verifyJwtToken, recreationUserMap_controller_1.joinRecreation);
 exports.RecreationUserMapRoutes.post("/updateUserrecreationMilestoneStatus", JWT_1.verifyJwtToken, recreationUserMap_controller_1.updateUserrecreationMilestoneStatus);
+exports.RecreationUserMapRoutes.post("/fetchedUsersRecreation", JWT_1.verifyJwtToken, recreationUserMap_controller_1.fetchedUsersRecreation);

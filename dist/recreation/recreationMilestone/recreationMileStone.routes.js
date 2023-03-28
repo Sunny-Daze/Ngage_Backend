@@ -11,3 +11,4 @@ exports.RecreationMilestoneRoutes = express_1.default.Router();
 exports.RecreationMilestoneRoutes.post("/createRecreationMileStone", JWT_1.verifyJwtToken, recreationMileStone_controller_1.createRecreationMileStone);
 exports.RecreationMilestoneRoutes.post("/updateRecreationMileStone", JWT_1.verifyJwtToken, recreationMileStone_controller_1.updateRecreationMileStone);
 exports.RecreationMilestoneRoutes.post("/deleteRecreationMileStone", JWT_1.verifyJwtToken, recreationMileStone_controller_1.deleteRecreationMileStone);
+exports.RecreationMilestoneRoutes.post("/completeRecreationMileStone", JWT_1.verifyJwtToken, recreationMileStone_controller_1.completeRecreationMileStone);

@@ -38,6 +38,10 @@ __decorate([
     (0, typegoose_1.prop)({ default: false }),
     __metadata("design:type", Boolean)
 ], Recreation.prototype, "isDeleted", void 0);
+__decorate([
+    (0, typegoose_1.prop)(),
+    __metadata("design:type", Boolean)
+], Recreation.prototype, "participated", void 0);
 exports.Recreation = Recreation;
 exports.RecreationModel = (0, typegoose_1.getModelForClass)(Recreation, {
     schemaOptions: { timestamps: true },

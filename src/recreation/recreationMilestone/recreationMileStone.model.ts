@@ -14,14 +14,8 @@ export class RecreationMilestone {
   @prop({ default: 0 })
   userPoints: number;
 
-  @prop({ default: true })
-  isActive: boolean;
-
   @prop()
-  status:boolean
-
-  @prop({ default: false })
-  isDeleted: boolean;
+  status: boolean;
 }
 
 export const RecreationMilestoneModel = getModelForClass(RecreationMilestone, {

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { RecreationModel } from "./recreation.model";
+import { RecreationMilestoneUserMapModel } from "./recreationMilestone/milestoneUserMap.model";
 import {
   RecreationMilestone,
   RecreationMilestoneModel,
@@ -7,6 +8,7 @@ import {
 import { RecreationUserMapModel } from "./recreationUserMap/recreationUserMap.model";
 
 export const fetchRecreations = async (req: any, res: Response) => {
+  let { user } = req.body;
   try {
     let recreation = await RecreationModel.find({
       isActive: true,
@@ -14,11 +16,27 @@ export const fetchRecreations = async (req: any, res: Response) => {
     }).populate("createdBy", { userName: 1 });
 
     for await (const rec of recreation) {
+      let participated = await RecreationUserMapModel.findOne({
+        user,
+        recreationId: rec._id,
+      });
+
+      rec.participated = participated ? true : false;
+
       let milestones = await RecreationMilestoneModel.find({
         isDeleted: false,
         isActive: true,
         recreationId: rec._id,
       });
+
+      for await (const mile of milestones) {
+        let status = await RecreationMilestoneUserMapModel.findOne({
+          user,
+          recreationMileStoneId: mile._id,
+        });
+
+        mile.status = status ? true : false;
+      }
 
       rec.milestones = milestones;
     }

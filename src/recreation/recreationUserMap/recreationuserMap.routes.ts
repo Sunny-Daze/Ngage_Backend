@@ -3,6 +3,7 @@ import { verifyJwtToken } from "../../utils/middleware/JWT";
 import {
   joinRecreation,
   updateUserrecreationMilestoneStatus,
+  fetchedUsersRecreation
 } from "./recreationUserMap.controller";
 export const RecreationUserMapRoutes: Router = express.Router();
 
@@ -16,3 +17,13 @@ RecreationUserMapRoutes.post(
   verifyJwtToken,
   updateUserrecreationMilestoneStatus
 );
+
+
+RecreationUserMapRoutes.post(
+  "/fetchedUsersRecreation",
+  verifyJwtToken,
+  fetchedUsersRecreation
+);
+
+
+

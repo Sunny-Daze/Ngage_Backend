@@ -29,10 +29,6 @@ __decorate([
     __metadata("design:type", Object)
 ], RecreationUserMap.prototype, "milestone", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ default: false }),
-    __metadata("design:type", Boolean)
-], RecreationUserMap.prototype, "status", void 0);
-__decorate([
     (0, typegoose_1.prop)({ default: true }),
     __metadata("design:type", Boolean)
 ], RecreationUserMap.prototype, "isActive", void 0);

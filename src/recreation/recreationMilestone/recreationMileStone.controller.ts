@@ -1,5 +1,7 @@
 import { RecreationMilestoneModel } from "./recreationMileStone.model";
 import { Request, Response } from "express";
+import { RecreationMilestoneUserMapModel } from "./milestoneUserMap.model";
+import { UserModel } from "../../auth/User.model";
 
 export const createRecreationMileStone = async (req: any, res: Response) => {
   let { recreationId, title, desc, userPoints } = req.body;
@@ -71,13 +73,15 @@ export const updateRecreationMileStone = async (req: any, res: Response) => {
 };
 
 export const deleteRecreationMileStone = async (req: any, res: Response) => {
-  let { recreationMileStoneId, } = req.body;
+  let { recreationMileStoneId } = req.body;
   try {
-    let mileStone = await RecreationMilestoneModel.findByIdAndUpdate(recreationMileStoneId,{
-      isDeleted: true,
-      isActive : false
-
-    });
+    let mileStone = await RecreationMilestoneModel.findByIdAndUpdate(
+      recreationMileStoneId,
+      {
+        isDeleted: true,
+        isActive: false,
+      }
+    );
     if (mileStone) {
       res.status(201).json({
         success: true,
@@ -95,6 +99,42 @@ export const deleteRecreationMileStone = async (req: any, res: Response) => {
     res.status(401).json({
       success: false,
       message: "Failed to create recreation  milestone",
+      error,
+    });
+  }
+};
+
+export const completeRecreationMileStone = async (req: any, res: Response) => {
+  let { recreationMileStoneId, user } = req.body;
+  try {
+    let updatedData = RecreationMilestoneUserMapModel.create({
+      user,
+      recreationMileStoneId,
+    });
+
+    let points = await RecreationMilestoneModel.findById(recreationMileStoneId)
+      
+
+    await UserModel.findByIdAndUpdate(user, {
+      $inc: {
+        userPoints: points!.userPoints,
+      },
+    });
+
+    if (updatedData) {
+      res.status(201).json({
+        success: true,
+        result: updatedData,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        result: null,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
       error,
     });
   }

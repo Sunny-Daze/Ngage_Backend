@@ -5,6 +5,7 @@ import { LikeRouter } from "./likes/like.routes";
 import { PostRoutes } from "./posts/post.routes";
 import { RecreationRoutes } from "./recreation/recreation.routes";
 import { RecreationMilestoneRoutes } from "./recreation/recreationMilestone/recreationMileStone.routes";
+import { RecreationUserMapRoutes } from "./recreation/recreationUserMap/recreationuserMap.routes";
 import { ShopRoutes } from "./shop/shop.routes";
 import { TrainingRoutes } from "./training/training.routes";
 import { TraningTaskRoutes } from "./training/trainingTask/trainingTask.routes";
@@ -18,6 +19,7 @@ app.use("/comment", CommentRoutes);
 app.use("/like", LikeRouter);
 app.use("/recreation", RecreationRoutes);
 app.use("/recreationMilestone", RecreationMilestoneRoutes);
+app.use("/recreationUserMapRoutes",RecreationUserMapRoutes)
 
 
 

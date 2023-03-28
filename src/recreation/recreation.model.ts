@@ -19,6 +19,10 @@ export class Recreation {
 
   @prop({ default: false })
   isDeleted: boolean;
+
+
+  @prop()
+  participated:boolean
 }
 
 export const RecreationModel = getModelForClass(Recreation, {

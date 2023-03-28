@@ -18,37 +18,68 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchRecreationsForUser = exports.deleteRecreation = exports.updateRecreation = exports.createRecreation = exports.fetchRecreations = void 0;
 const recreation_model_1 = require("./recreation.model");
+const milestoneUserMap_model_1 = require("./recreationMilestone/milestoneUserMap.model");
 const recreationMileStone_model_1 = require("./recreationMilestone/recreationMileStone.model");
 const recreationUserMap_model_1 = require("./recreationUserMap/recreationUserMap.model");
 const fetchRecreations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, e_1, _b, _c;
+    var _a, e_1, _b, _c, _d, e_2, _e, _f;
+    let { user } = req.body;
     try {
         let recreation = yield recreation_model_1.RecreationModel.find({
             isActive: true,
             isDeleted: false,
         }).populate("createdBy", { userName: 1 });
         try {
-            for (var _d = true, recreation_1 = __asyncValues(recreation), recreation_1_1; recreation_1_1 = yield recreation_1.next(), _a = recreation_1_1.done, !_a;) {
+            for (var _g = true, recreation_1 = __asyncValues(recreation), recreation_1_1; recreation_1_1 = yield recreation_1.next(), _a = recreation_1_1.done, !_a;) {
                 _c = recreation_1_1.value;
-                _d = false;
+                _g = false;
                 try {
                     const rec = _c;
+                    let participated = yield recreationUserMap_model_1.RecreationUserMapModel.findOne({
+                        user,
+                        recreationId: rec._id,
+                    });
+                    rec.participated = participated ? true : false;
                     let milestones = yield recreationMileStone_model_1.RecreationMilestoneModel.find({
                         isDeleted: false,
                         isActive: true,
                         recreationId: rec._id,
                     });
+                    try {
+                        for (var _h = true, milestones_1 = (e_2 = void 0, __asyncValues(milestones)), milestones_1_1; milestones_1_1 = yield milestones_1.next(), _d = milestones_1_1.done, !_d;) {
+                            _f = milestones_1_1.value;
+                            _h = false;
+                            try {
+                                const mile = _f;
+                                let status = yield milestoneUserMap_model_1.RecreationMilestoneUserMapModel.findOne({
+                                    user,
+                                    recreationMileStoneId: mile._id,
+                                });
+                                mile.status = status ? true : false;
+                            }
+                            finally {
+                                _h = true;
+                            }
+                        }
+                    }
+                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                    finally {
+                        try {
+                            if (!_h && !_d && (_e = milestones_1.return)) yield _e.call(milestones_1);
+                        }
+                        finally { if (e_2) throw e_2.error; }
+                    }
                     rec.milestones = milestones;
                 }
                 finally {
-                    _d = true;
+                    _g = true;
                 }
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (!_d && !_a && (_b = recreation_1.return)) yield _b.call(recreation_1);
+                if (!_g && !_a && (_b = recreation_1.return)) yield _b.call(recreation_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -177,7 +208,7 @@ const deleteRecreation = (req, res) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.deleteRecreation = deleteRecreation;
 const fetchRecreationsForUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _e, e_2, _f, _g, _h, e_3, _j, _k;
+    var _j, e_3, _k, _l, _m, e_4, _o, _p;
     let { user } = req.body;
     try {
         let recreation = yield recreation_model_1.RecreationModel.find({
@@ -185,21 +216,21 @@ const fetchRecreationsForUser = (req, res) => __awaiter(void 0, void 0, void 0, 
             isDeleted: false,
         });
         try {
-            for (var _l = true, recreation_2 = __asyncValues(recreation), recreation_2_1; recreation_2_1 = yield recreation_2.next(), _e = recreation_2_1.done, !_e;) {
-                _g = recreation_2_1.value;
-                _l = false;
+            for (var _q = true, recreation_2 = __asyncValues(recreation), recreation_2_1; recreation_2_1 = yield recreation_2.next(), _j = recreation_2_1.done, !_j;) {
+                _l = recreation_2_1.value;
+                _q = false;
                 try {
-                    const rec = _g;
+                    const rec = _l;
                     let milestones = yield recreationMileStone_model_1.RecreationMilestoneModel.find({
                         isDeleted: false,
                         isActive: false,
                     });
                     try {
-                        for (var _m = true, milestones_1 = (e_3 = void 0, __asyncValues(milestones)), milestones_1_1; milestones_1_1 = yield milestones_1.next(), _h = milestones_1_1.done, !_h;) {
-                            _k = milestones_1_1.value;
-                            _m = false;
+                        for (var _r = true, milestones_2 = (e_4 = void 0, __asyncValues(milestones)), milestones_2_1; milestones_2_1 = yield milestones_2.next(), _m = milestones_2_1.done, !_m;) {
+                            _p = milestones_2_1.value;
+                            _r = false;
                             try {
-                                const mile = _k;
+                                const mile = _p;
                                 let userStatus = yield recreationUserMap_model_1.RecreationUserMapModel.findOne({
                                     milestone: mile._id,
                                     user: user,
@@ -207,29 +238,29 @@ const fetchRecreationsForUser = (req, res) => __awaiter(void 0, void 0, void 0, 
                                 mile.status = userStatus.status;
                             }
                             finally {
-                                _m = true;
+                                _r = true;
                             }
                         }
                     }
-                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
                     finally {
                         try {
-                            if (!_m && !_h && (_j = milestones_1.return)) yield _j.call(milestones_1);
+                            if (!_r && !_m && (_o = milestones_2.return)) yield _o.call(milestones_2);
                         }
-                        finally { if (e_3) throw e_3.error; }
+                        finally { if (e_4) throw e_4.error; }
                     }
                 }
                 finally {
-                    _l = true;
+                    _q = true;
                 }
             }
         }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
-                if (!_l && !_e && (_f = recreation_2.return)) yield _f.call(recreation_2);
+                if (!_q && !_j && (_k = recreation_2.return)) yield _k.call(recreation_2);
             }
-            finally { if (e_2) throw e_2.error; }
+            finally { if (e_3) throw e_3.error; }
         }
         if (recreation) {
             res.status(201).json({

@@ -9,32 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RecreationMilestoneModel = exports.RecreationMilestone = void 0;
+exports.RecreationMilestoneUserMapModel = exports.RecreationMilestoneUserMap = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
+const User_model_1 = require("../../auth/User.model");
 const recreation_model_1 = require("../recreation.model");
-class RecreationMilestone {
+class RecreationMilestoneUserMap {
 }
 __decorate([
     (0, typegoose_1.prop)({ ref: () => recreation_model_1.Recreation }),
     __metadata("design:type", Object)
-], RecreationMilestone.prototype, "recreationId", void 0);
+], RecreationMilestoneUserMap.prototype, "recreationMileStoneId", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ required: true }),
-    __metadata("design:type", String)
-], RecreationMilestone.prototype, "title", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ required: true }),
-    __metadata("design:type", String)
-], RecreationMilestone.prototype, "desc", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ default: 0 }),
-    __metadata("design:type", Number)
-], RecreationMilestone.prototype, "userPoints", void 0);
-__decorate([
-    (0, typegoose_1.prop)(),
-    __metadata("design:type", Boolean)
-], RecreationMilestone.prototype, "status", void 0);
-exports.RecreationMilestone = RecreationMilestone;
-exports.RecreationMilestoneModel = (0, typegoose_1.getModelForClass)(RecreationMilestone, {
+    (0, typegoose_1.prop)({ ref: () => User_model_1.User }),
+    __metadata("design:type", Object)
+], RecreationMilestoneUserMap.prototype, "user", void 0);
+exports.RecreationMilestoneUserMap = RecreationMilestoneUserMap;
+exports.RecreationMilestoneUserMapModel = (0, typegoose_1.getModelForClass)(RecreationMilestoneUserMap, {
     schemaOptions: { timestamps: true },
 });

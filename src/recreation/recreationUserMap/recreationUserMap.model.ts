@@ -13,9 +13,6 @@ export class RecreationUserMap {
   @prop({ ref: () => RecreationMilestone })
   milestone: Ref<RecreationMilestone>;
 
-  @prop({ default: false })
-  status: boolean;
-
   @prop({ default: true })
   isActive: boolean;
 
