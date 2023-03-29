@@ -38,7 +38,7 @@ const fetchTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function*
                     let tasks = yield trainingTask_model_1.TrainingTaskModel.find({
                         isDeleted: false,
                         isActive: true,
-                        recreationId: train._id,
+                        trainingId: train._id,
                     });
                     try {
                         for (var _h = true, tasks_1 = (e_2 = void 0, __asyncValues(tasks)), tasks_1_1; tasks_1_1 = yield tasks_1.next(), _d = tasks_1_1.done, !_d;) {

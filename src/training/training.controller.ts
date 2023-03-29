@@ -19,7 +19,7 @@ export const fetchTrainings = async (req: any, res: Response) => {
       let tasks = await TrainingTaskModel.find({
         isDeleted: false,
         isActive: true,
-        recreationId: train._id,
+        trainingId: train._id,
       });
 
       for await (const tk of tasks) {
