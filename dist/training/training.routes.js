@@ -12,3 +12,4 @@ exports.TrainingRoutes.post("/fetchTrainings", JWT_1.verifyJwtToken, training_co
 exports.TrainingRoutes.post("/createTraining", JWT_1.verifyJwtToken, training_controller_1.createTraining);
 exports.TrainingRoutes.post("/updateTraining", JWT_1.verifyJwtToken, training_controller_1.updateTraining);
 exports.TrainingRoutes.post("/deleteTraining", JWT_1.verifyJwtToken, training_controller_1.deleteTraining);
+exports.TrainingRoutes.post("/enrolForTraining", JWT_1.verifyJwtToken, training_controller_1.enrolForTraining);

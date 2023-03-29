@@ -19,6 +19,9 @@ export class Training {
 
   @prop({ default: false })
   isDeleted: boolean;
+
+  @prop()
+  participated: boolean;
 }
 
 export const TrainingModel = getModelForClass(Training, {

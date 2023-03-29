@@ -11,3 +11,4 @@ exports.TraningTaskRoutes = express_1.default.Router();
 exports.TraningTaskRoutes.post("/createTrainingTask", JWT_1.verifyJwtToken, trainingTask_controller_1.createTrainingTask);
 exports.TraningTaskRoutes.post("/updateTrainingTask", JWT_1.verifyJwtToken, trainingTask_controller_1.updateTrainingTask);
 exports.TraningTaskRoutes.post("/deleteTrainingTask", JWT_1.verifyJwtToken, trainingTask_controller_1.deleteTrainingTask);
+exports.TraningTaskRoutes.post("/completeTraningTask", JWT_1.verifyJwtToken, trainingTask_controller_1.completeTraningTask);

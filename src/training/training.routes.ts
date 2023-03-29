@@ -5,6 +5,7 @@ import {
   createTraining,
   deleteTraining,
   updateTraining,
+  enrolForTraining,
 } from "./training.controller";
 export const TrainingRoutes: Router = express.Router();
 
@@ -12,6 +13,4 @@ TrainingRoutes.post("/fetchTrainings", verifyJwtToken, fetchTrainings);
 TrainingRoutes.post("/createTraining", verifyJwtToken, createTraining);
 TrainingRoutes.post("/updateTraining", verifyJwtToken, updateTraining);
 TrainingRoutes.post("/deleteTraining", verifyJwtToken, deleteTraining);
-
-
-
+TrainingRoutes.post("/enrolForTraining", verifyJwtToken, enrolForTraining);

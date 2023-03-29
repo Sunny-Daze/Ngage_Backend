@@ -4,9 +4,11 @@ import {
   TrainingTask,
   TrainingTaskModel,
 } from "./trainingTask/trainingTask.model";
-import { TrainingUserMapModel } from "./trainingUserMap/trainingUserMap.model";
+import { TrainingTaskUserMapModel } from "./trainingTask/trainingTaskUserMap";
+import { TrainingUserMapModel } from "./trainingUserMap.model";
 
 export const fetchTrainings = async (req: any, res: Response) => {
+  let { user } = req.body;
   try {
     let training = await TrainingModel.find({
       isActive: true,
@@ -19,6 +21,21 @@ export const fetchTrainings = async (req: any, res: Response) => {
         isActive: true,
         recreationId: train._id,
       });
+
+      for await (const tk of tasks) {
+        let taskStatus = await TrainingTaskUserMapModel.findOne({
+          user,
+          trainingTaskId: tk._id,
+        });
+        tk.status = taskStatus ? true : false;
+      }
+
+      // Check For Participated
+      let participated = await TrainingUserMapModel.findOne({
+        user,
+        trainingId: train._id,
+      });
+      train.participated = participated ? true : false;
 
       train.tasks = tasks;
     }
@@ -83,7 +100,7 @@ export const createTraining = async (req: any, res: Response) => {
 export const updateTraining = async (req: any, res: Response) => {
   let { trainingId, title, desc, user } = req.body;
   try {
-    let training =  await TrainingModel.findByIdAndUpdate(
+    let training = await TrainingModel.findByIdAndUpdate(
       trainingId,
       {
         title: title,
@@ -149,14 +166,30 @@ export const deleteTraining = async (req: any, res: Response) => {
   }
 };
 
-export const fetchTrainingForUser = async (req: any, res: Response) => {
-  let { user } = req.body;
+export const enrolForTraining = async (req: any, res: Response) => {
+  let { trainingId, user } = req.body;
   try {
- 
+    let training = await TrainingUserMapModel.create({
+      trainingId,
+      user,
+    });
+    if (training) {
+      res.status(201).json({
+        success: true,
+        message: "training Deleted",
+        result: training,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        message: "Failed to Delete training",
+        result: null,
+      });
+    }
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: "Failed to fetch recreation",
+      message: "Failed to Delete training",
       error,
     });
   }

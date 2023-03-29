@@ -1,14 +1,13 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { User } from "../../auth/User.model";
-import { Recreation } from "../recreation.model";
+import { RecreationMilestone } from "./recreationMileStone.model";
 
 export class RecreationMilestoneUserMap {
-  @prop({ ref: () => Recreation })
-  recreationMileStoneId: Ref<Recreation>;
+  @prop({ ref: () => RecreationMilestone })
+  recreationMileStoneId: Ref<RecreationMilestone>;
 
   @prop({ ref: () => User })
   user: Ref<User>;
-
 }
 
 export const RecreationMilestoneUserMapModel = getModelForClass(

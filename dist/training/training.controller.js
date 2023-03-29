@@ -16,20 +16,23 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchTrainingForUser = exports.deleteTraining = exports.updateTraining = exports.createTraining = exports.fetchTrainings = void 0;
+exports.enrolForTraining = exports.deleteTraining = exports.updateTraining = exports.createTraining = exports.fetchTrainings = void 0;
 const traning_model_1 = require("./traning.model");
 const trainingTask_model_1 = require("./trainingTask/trainingTask.model");
+const trainingTaskUserMap_1 = require("./trainingTask/trainingTaskUserMap");
+const trainingUserMap_model_1 = require("./trainingUserMap.model");
 const fetchTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, e_1, _b, _c;
+    var _a, e_1, _b, _c, _d, e_2, _e, _f;
+    let { user } = req.body;
     try {
         let training = yield traning_model_1.TrainingModel.find({
             isActive: true,
             isDeleted: false,
         }).populate("createdBy", { userName: 1 });
         try {
-            for (var _d = true, training_1 = __asyncValues(training), training_1_1; training_1_1 = yield training_1.next(), _a = training_1_1.done, !_a;) {
+            for (var _g = true, training_1 = __asyncValues(training), training_1_1; training_1_1 = yield training_1.next(), _a = training_1_1.done, !_a;) {
                 _c = training_1_1.value;
-                _d = false;
+                _g = false;
                 try {
                     const train = _c;
                     let tasks = yield trainingTask_model_1.TrainingTaskModel.find({
@@ -37,17 +40,46 @@ const fetchTrainings = (req, res) => __awaiter(void 0, void 0, void 0, function*
                         isActive: true,
                         recreationId: train._id,
                     });
+                    try {
+                        for (var _h = true, tasks_1 = (e_2 = void 0, __asyncValues(tasks)), tasks_1_1; tasks_1_1 = yield tasks_1.next(), _d = tasks_1_1.done, !_d;) {
+                            _f = tasks_1_1.value;
+                            _h = false;
+                            try {
+                                const tk = _f;
+                                let taskStatus = yield trainingTaskUserMap_1.TrainingTaskUserMapModel.findOne({
+                                    user,
+                                    trainingTaskId: tk._id,
+                                });
+                                tk.status = taskStatus ? true : false;
+                            }
+                            finally {
+                                _h = true;
+                            }
+                        }
+                    }
+                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                    finally {
+                        try {
+                            if (!_h && !_d && (_e = tasks_1.return)) yield _e.call(tasks_1);
+                        }
+                        finally { if (e_2) throw e_2.error; }
+                    }
+                    let participated = yield trainingUserMap_model_1.TrainingUserMapModel.findOne({
+                        user,
+                        trainingId: train._id,
+                    });
+                    train.participated = participated ? true : false;
                     train.tasks = tasks;
                 }
                 finally {
-                    _d = true;
+                    _g = true;
                 }
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
         finally {
             try {
-                if (!_d && !_a && (_b = training_1.return)) yield _b.call(training_1);
+                if (!_g && !_a && (_b = training_1.return)) yield _b.call(training_1);
             }
             finally { if (e_1) throw e_1.error; }
         }
@@ -177,16 +209,34 @@ const deleteTraining = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.deleteTraining = deleteTraining;
-const fetchTrainingForUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { user } = req.body;
+const enrolForTraining = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { trainingId, user } = req.body;
     try {
+        let training = yield trainingUserMap_model_1.TrainingUserMapModel.create({
+            trainingId,
+            user,
+        });
+        if (training) {
+            res.status(201).json({
+                success: true,
+                message: "training Deleted",
+                result: training,
+            });
+        }
+        else {
+            res.status(201).json({
+                success: false,
+                message: "Failed to Delete training",
+                result: null,
+            });
+        }
     }
     catch (error) {
         res.status(401).json({
             success: false,
-            message: "Failed to fetch recreation",
+            message: "Failed to Delete training",
             error,
         });
     }
 });
-exports.fetchTrainingForUser = fetchTrainingForUser;
+exports.enrolForTraining = enrolForTraining;

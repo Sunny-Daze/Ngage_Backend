@@ -9,8 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTrainingTask = exports.updateTrainingTask = exports.createTrainingTask = void 0;
+exports.completeTraningTask = exports.deleteTrainingTask = exports.updateTrainingTask = exports.createTrainingTask = void 0;
 const trainingTask_model_1 = require("./trainingTask.model");
+const trainingTaskUserMap_1 = require("./trainingTaskUserMap");
+const User_model_1 = require("../../auth/User.model");
 const createTrainingTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let { trainingId, title, desc, userPoints } = req.body;
     try {
@@ -81,11 +83,11 @@ const updateTrainingTask = (req, res) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.updateTrainingTask = updateTrainingTask;
 const deleteTrainingTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { trainingTaskId, } = req.body;
+    let { trainingTaskId } = req.body;
     try {
         let trainingTask = yield trainingTask_model_1.TrainingTaskModel.findByIdAndUpdate(trainingTaskId, {
             isDeleted: true,
-            isActive: false
+            isActive: false,
         });
         if (trainingTask) {
             res.status(201).json({
@@ -111,3 +113,40 @@ const deleteTrainingTask = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.deleteTrainingTask = deleteTrainingTask;
+const completeTraningTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let { trainingTaskId, user } = req.body;
+    try {
+        let trainingTask = yield trainingTaskUserMap_1.TrainingTaskUserMapModel.create({
+            trainingTaskId,
+            user,
+        });
+        if (trainingTask) {
+            let userPoint = yield trainingTask_model_1.TrainingTaskModel.findById(trainingTaskId);
+            yield User_model_1.UserModel.findByIdAndUpdate(user, {
+                $inc: {
+                    userPoints: userPoint === null || userPoint === void 0 ? void 0 : userPoint.userPoints,
+                },
+            });
+            res.status(201).json({
+                success: true,
+                message: "Training TrainingTask created",
+                result: trainingTask,
+            });
+        }
+        else {
+            res.status(201).json({
+                success: false,
+                message: "Failed to delete Training task",
+                result: null,
+            });
+        }
+    }
+    catch (error) {
+        res.status(401).json({
+            success: false,
+            message: "Failed to delete recreation  milestone",
+            error,
+        });
+    }
+});
+exports.completeTraningTask = completeTraningTask;

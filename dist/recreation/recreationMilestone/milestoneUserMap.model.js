@@ -12,11 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecreationMilestoneUserMapModel = exports.RecreationMilestoneUserMap = void 0;
 const typegoose_1 = require("@typegoose/typegoose");
 const User_model_1 = require("../../auth/User.model");
-const recreation_model_1 = require("../recreation.model");
+const recreationMileStone_model_1 = require("./recreationMileStone.model");
 class RecreationMilestoneUserMap {
 }
 __decorate([
-    (0, typegoose_1.prop)({ ref: () => recreation_model_1.Recreation }),
+    (0, typegoose_1.prop)({ ref: () => recreationMileStone_model_1.RecreationMilestone }),
     __metadata("design:type", Object)
 ], RecreationMilestoneUserMap.prototype, "recreationMileStoneId", void 0);
 __decorate([
