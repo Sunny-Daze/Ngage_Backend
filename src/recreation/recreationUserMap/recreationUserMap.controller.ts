@@ -89,7 +89,7 @@ export const fetchedUsersRecreation = async (req: any, res: Response) => {
     if (mappedData) {
       for await (const rec of mappedData) {
         let recreation = await RecreationModel.findById(rec._id);
-        let milestone = await RecreationMilestoneModel.find(recreation?._id);
+        let milestone = await RecreationMilestoneModel.find({recreationId:recreation?._id});
         recreation!.milestones = milestone ? milestone : [];
         userRecreations.push(recreation);
       }

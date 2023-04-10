@@ -1,16 +1,14 @@
 import express, { Router } from "express";
 import { verifyJwtToken } from "../utils/middleware/JWT";
 import {
-  fetchTrainings,
-  createTraining,
-  deleteTraining,
-  updateTraining,
-  enrolForTraining,
+  fetchProject,
+  createProject,
+  deleteProject,
+  editProject
 } from "./project.controller";
-export const TrainingRoutes: Router = express.Router();
+export const ProjectRoutes: Router = express.Router();
 
-TrainingRoutes.post("/fetchTrainings", verifyJwtToken, fetchTrainings);
-TrainingRoutes.post("/createTraining", verifyJwtToken, createTraining);
-TrainingRoutes.post("/updateTraining", verifyJwtToken, updateTraining);
-TrainingRoutes.post("/deleteTraining", verifyJwtToken, deleteTraining);
-TrainingRoutes.post("/enrolForTraining", verifyJwtToken, enrolForTraining);
+ProjectRoutes.post("/fetchProject", verifyJwtToken, fetchProject);
+ProjectRoutes.post("/createProject", verifyJwtToken, createProject);
+ProjectRoutes.post("/deleteProject", verifyJwtToken, deleteProject);
+ProjectRoutes.post("/editProject", verifyJwtToken, editProject);

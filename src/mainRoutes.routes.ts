@@ -9,6 +9,7 @@ import { RecreationUserMapRoutes } from "./recreation/recreationUserMap/recreati
 import { ShopRoutes } from "./shop/shop.routes";
 import { TrainingRoutes } from "./training/training.routes";
 import { TraningTaskRoutes } from "./training/trainingTask/trainingTask.routes";
+import { ProjectRoutes } from "./projects/project.routes";
 const app = express();
 
 
@@ -25,6 +26,9 @@ app.use("/recreationUserMapRoutes",RecreationUserMapRoutes)
 
 app.use("/training", TrainingRoutes);
 app.use("/trainingTask", TraningTaskRoutes);
+
+app.use("/project", ProjectRoutes);
+
 
 
 

@@ -1,5 +1,6 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { User } from "../auth/User.model";
+import { ProjectTask } from "./projectTasks/projectTasks.model";
 
 export class Project {
   @prop({ trim: true })
@@ -10,9 +11,12 @@ export class Project {
 
   @prop({ ref: () => User })
   createdBy: Ref<User>;
-
+  
+  @prop({default : 0})
+  cost: number;
+  
   @prop()
-  tasks: Array<any>;
+  tasks: Array<ProjectTask>;
 
   @prop({ default: true })
   isActive: boolean;
@@ -20,8 +24,9 @@ export class Project {
   @prop({ default: false })
   isDeleted: boolean;
 
-  @prop()
-  participated: boolean;
+  
+ 
+
 }
 
 export const ProjectModel = getModelForClass(Project, {

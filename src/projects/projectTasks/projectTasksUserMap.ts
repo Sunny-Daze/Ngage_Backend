@@ -1,15 +1,15 @@
 import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { User } from "../../auth/User.model";
-import { TrainingTask } from "./projectTasks.model";
+import { ProjectTask, ProjectTaskModel } from "./projectTasks.model";
 
-export class TrainingTaskUserMap {
-  @prop({ ref: () => TrainingTask })
-  trainingTaskId: Ref<TrainingTask>;
+export class ProjectTaskUserMap {
+  @prop({ ref: () => ProjectTask })
+  projectTaskId: Ref<ProjectTask>;
 
   @prop({ ref: () => User })
   user: Ref<User>;
 }
 
-export const TrainingTaskUserMapModel = getModelForClass(TrainingTaskUserMap, {
+export const ProjectTaskUserMapModel = getModelForClass(ProjectTaskUserMap, {
   schemaOptions: { timestamps: true },
 });

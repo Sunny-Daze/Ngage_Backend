@@ -2,6 +2,9 @@ import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { User } from "../../auth/User.model";
 import { Project } from "../project.model";
 
+
+
+
 export class ProjectTask {
   @prop({ ref: () => Project })
   projectId: Ref<Project>;
@@ -15,8 +18,8 @@ export class ProjectTask {
   @prop({ default: 0 })
   cost: number;
 
-  @prop({ default: 0 })
-  priority: number;
+  @prop({ default: 'LOW'})
+  priority: string;
 
   @prop({ default: 0 })
   status: number;
@@ -24,11 +27,11 @@ export class ProjectTask {
   @prop({ default: 0 })
   notes: number;
 
-  @prop({ default: 0 })
-  deadline: number;
+  @prop({ })
+  deadline: Date;
 
   @prop({ ref: () => User })
-  assignTo: Ref<User>;
+  assignTo: Ref<User>[];
 
   @prop({ ref: () => User })
   assignBy: Ref<User>;
