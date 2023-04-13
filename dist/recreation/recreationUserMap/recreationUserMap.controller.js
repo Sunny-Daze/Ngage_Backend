@@ -106,7 +106,7 @@ const fetchedUsersRecreation = (req, res) => __awaiter(void 0, void 0, void 0, f
                     try {
                         const rec = _c;
                         let recreation = yield recreation_model_1.RecreationModel.findById(rec._id);
-                        let milestone = yield recreationMileStone_model_1.RecreationMilestoneModel.find(recreation === null || recreation === void 0 ? void 0 : recreation._id);
+                        let milestone = yield recreationMileStone_model_1.RecreationMilestoneModel.find({ recreationId: recreation === null || recreation === void 0 ? void 0 : recreation._id });
                         recreation.milestones = milestone ? milestone : [];
                         userRecreations.push(recreation);
                     }
