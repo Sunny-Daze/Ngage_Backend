@@ -15,10 +15,10 @@ export class ProjectTask {
   @prop({ default: 0 })
   cost: number;
 
-  @prop({ default: "LOW" })
+  @prop({ default: "low" })
   priority: string;
 
-  @prop({})
+  @prop({default:"Pending"})
   status: string;
 
   @prop({})
@@ -30,8 +30,10 @@ export class ProjectTask {
   @prop({ ref: () => User })
   createdBy: Ref<User>;
 
-  @prop({ ref: () => User })
-  assignedTo: Ref<User>[];
+  @prop({})
+  assignedTo: string;
+
+  // assignedTo: Ref<User>[];
 
   @prop({ default: true })
   isActive: boolean;

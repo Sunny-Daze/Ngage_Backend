@@ -30,13 +30,12 @@ export const createProject = async (req: Request, res: Response) => {
 };
 
 export const editProject = async (req: Request, res: Response) => {
-  let { projectId, title, desc, createdBy, cost } = req.body;
+  let { projectId, title, desc, createdBy } = req.body;
   try {
     let project = await ProjectModel.findByIdAndUpdate(projectId, {
       title,
       desc,
       createdBy,
-      cost,
     });
     if (project) {
       res.status(201).json({
@@ -94,7 +93,11 @@ export const fetchProject = async (req: Request, res: Response) => {
     for await (const project of projects) {
       let tasks = await ProjectTaskModel.find({
         projectId: project._id,
+        isActive: true,
+        isDeleted: false,
       });
+
+      project.tasks = tasks;
     }
 
     if (projects) {
