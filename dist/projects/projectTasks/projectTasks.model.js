@@ -32,29 +32,29 @@ __decorate([
     __metadata("design:type", Number)
 ], ProjectTask.prototype, "cost", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ default: 'LOW' }),
+    (0, typegoose_1.prop)({ default: "low" }),
     __metadata("design:type", String)
 ], ProjectTask.prototype, "priority", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ default: 0 }),
-    __metadata("design:type", Number)
+    (0, typegoose_1.prop)({ default: "Pending" }),
+    __metadata("design:type", String)
 ], ProjectTask.prototype, "status", void 0);
 __decorate([
-    (0, typegoose_1.prop)({ default: 0 }),
-    __metadata("design:type", Number)
-], ProjectTask.prototype, "notes", void 0);
+    (0, typegoose_1.prop)({}),
+    __metadata("design:type", String)
+], ProjectTask.prototype, "note", void 0);
 __decorate([
     (0, typegoose_1.prop)({}),
     __metadata("design:type", Date)
 ], ProjectTask.prototype, "deadline", void 0);
 __decorate([
     (0, typegoose_1.prop)({ ref: () => User_model_1.User }),
-    __metadata("design:type", Array)
-], ProjectTask.prototype, "assignTo", void 0);
-__decorate([
-    (0, typegoose_1.prop)({ ref: () => User_model_1.User }),
     __metadata("design:type", Object)
-], ProjectTask.prototype, "assignBy", void 0);
+], ProjectTask.prototype, "createdBy", void 0);
+__decorate([
+    (0, typegoose_1.prop)({}),
+    __metadata("design:type", String)
+], ProjectTask.prototype, "assignedTo", void 0);
 __decorate([
     (0, typegoose_1.prop)({ default: true }),
     __metadata("design:type", Boolean)

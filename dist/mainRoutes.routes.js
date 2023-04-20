@@ -15,6 +15,8 @@ const shop_routes_1 = require("./shop/shop.routes");
 const training_routes_1 = require("./training/training.routes");
 const trainingTask_routes_1 = require("./training/trainingTask/trainingTask.routes");
 const project_routes_1 = require("./projects/project.routes");
+const projectTasks_routes_1 = require("./projects/projectTasks/projectTasks.routes");
+const services_routes_1 = require("./services/services.routes");
 const app = (0, express_1.default)();
 app.use("/auth", auth_routes_1.AuthRoutes);
 app.use("/post", post_routes_1.PostRoutes);
@@ -27,4 +29,6 @@ app.use("/recreationUserMapRoutes", recreationuserMap_routes_1.RecreationUserMap
 app.use("/training", training_routes_1.TrainingRoutes);
 app.use("/trainingTask", trainingTask_routes_1.TraningTaskRoutes);
 app.use("/project", project_routes_1.ProjectRoutes);
+app.use("/projectTask", projectTasks_routes_1.ProjectTaskRoutes);
+app.use("/service", services_routes_1.ServiceRouter);
 module.exports = app;

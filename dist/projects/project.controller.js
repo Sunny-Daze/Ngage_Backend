@@ -49,13 +49,12 @@ const createProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.createProject = createProject;
 const editProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { projectId, title, desc, createdBy, cost } = req.body;
+    let { projectId, title, desc, createdBy } = req.body;
     try {
         let project = yield project_model_1.ProjectModel.findByIdAndUpdate(projectId, {
             title,
             desc,
             createdBy,
-            cost,
         });
         if (project) {
             res.status(201).json({
@@ -122,7 +121,10 @@ const fetchProject = (req, res) => __awaiter(void 0, void 0, void 0, function* (
                     const project = _c;
                     let tasks = yield projectTasks_model_1.ProjectTaskModel.find({
                         projectId: project._id,
+                        isActive: true,
+                        isDeleted: false,
                     });
+                    project.tasks = tasks;
                 }
                 finally {
                     _d = true;
