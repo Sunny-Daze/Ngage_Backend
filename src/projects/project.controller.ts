@@ -118,3 +118,67 @@ export const fetchProject = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const fetchProjectById = async (req: Request, res: Response) => {
+  let { id } = req.body;
+  try {
+    let project = await ProjectModel.findById(id).populate("createdBy", {
+      userName: 1,
+    });
+
+    if (project) {
+      let tasks = await ProjectTaskModel.find({
+        projectId: project?._id,
+        isActive: true,
+        isDeleted: false,
+      });
+      project.tasks = tasks ?? [];
+    }
+    if (project) {
+      res.status(201).json({
+        success: true,
+        result: project,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        result: project,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      error,
+    });
+  }
+};
+
+export const fetchProjectNames = async (req: Request, res: Response) => {
+  try {
+    let projects = await ProjectModel.find(
+      {
+        isDeleted: false,
+        isActive: true,
+      },
+      {
+        title: 1,
+      }
+    );
+    if (projects) {
+      res.status(201).json({
+        success: true,
+        result: projects,
+      });
+    } else {
+      res.status(201).json({
+        success: false,
+        result: projects,
+      });
+    }
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      error,
+    });
+  }
+};
